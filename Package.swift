@@ -6,15 +6,15 @@ let package = Package(
     name: "SwiftCommon",
     products: [
         .library(
-            name: "SwiftCommon",
-            targets: ["SwiftCommon"]
+            name: "FoundationCommon",
+            targets: ["FoundationCommon"]
         )
     ],
     targets: [
-        .target(name: "SwiftCommon"),
+        .target(name: "FoundationCommon"),
         .testTarget(
-            name: "SwiftCommonTests",
-            dependencies: ["SwiftCommon"]
+            name: "FoundationCommonTests",
+            dependencies: ["FoundationCommon"]
         )
     ]
 )
