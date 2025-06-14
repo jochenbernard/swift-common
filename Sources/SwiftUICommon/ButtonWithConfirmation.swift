@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct ButtonWithConfirmation<Label: View>: View {
     private let confirmationTitleKey: LocalizedStringKey
-    private let confirmationButtonTitleKey: LocalizedStringKey
+    private let confirmationButtonTitleKey: LocalizedStringKey?
     private let cancelButtonTitleKey: LocalizedStringKey
     private let requiresConfirmation: Bool
     private let role: ButtonRole?
@@ -13,7 +13,7 @@ public struct ButtonWithConfirmation<Label: View>: View {
 
     public init(
         confirmation confirmationTitleKey: LocalizedStringKey,
-        confirmationButton confirmationButtonTitleKey: LocalizedStringKey,
+        confirmationButton confirmationButtonTitleKey: LocalizedStringKey? = nil,
         cancelButton cancelButtonTitleKey: LocalizedStringKey = "Cancel",
         requiresConfirmation: Bool = true,
         role: ButtonRole? = nil,
@@ -32,7 +32,7 @@ public struct ButtonWithConfirmation<Label: View>: View {
     public init(
         _ titleKey: LocalizedStringKey,
         confirmation confirmationTitleKey: LocalizedStringKey,
-        confirmationButton confirmationButtonTitleKey: LocalizedStringKey,
+        confirmationButton confirmationButtonTitleKey: LocalizedStringKey? = nil,
         cancelButton cancelButtonTitleKey: LocalizedStringKey = "Cancel",
         requiresConfirmation: Bool = true,
         role: ButtonRole? = nil,
@@ -54,7 +54,7 @@ public struct ButtonWithConfirmation<Label: View>: View {
         _ titleKey: LocalizedStringKey,
         image: String,
         confirmation confirmationTitleKey: LocalizedStringKey,
-        confirmationButton confirmationButtonTitleKey: LocalizedStringKey,
+        confirmationButton confirmationButtonTitleKey: LocalizedStringKey? = nil,
         cancelButton cancelButtonTitleKey: LocalizedStringKey = "Cancel",
         requiresConfirmation: Bool = true,
         role: ButtonRole? = nil,
@@ -79,7 +79,7 @@ public struct ButtonWithConfirmation<Label: View>: View {
         _ titleKey: LocalizedStringKey,
         systemImage: String,
         confirmation confirmationTitleKey: LocalizedStringKey,
-        confirmationButton confirmationButtonTitleKey: LocalizedStringKey,
+        confirmationButton confirmationButtonTitleKey: LocalizedStringKey? = nil,
         cancelButton cancelButtonTitleKey: LocalizedStringKey = "Cancel",
         requiresConfirmation: Bool = true,
         role: ButtonRole? = nil,
@@ -112,10 +112,15 @@ public struct ButtonWithConfirmation<Label: View>: View {
             titleVisibility: .visible,
             actions: {
                 Button(
-                    confirmationButtonTitleKey,
                     role: confirmationButtonRole,
                     action: confirmationButtonAction
-                )
+                ) {
+                    if let confirmationButtonTitleKey {
+                        Text(confirmationButtonTitleKey)
+                    } else {
+                        label()
+                    }
+                }
 
                 Button(
                     cancelButtonTitleKey,
@@ -150,7 +155,6 @@ public struct ButtonWithConfirmation<Label: View>: View {
 #Preview {
     ButtonWithConfirmation(
         confirmation: "Are you sure you want to delete this event?",
-        confirmationButton: "Delete Event",
         role: .destructive,
         action: {}
     ) {
@@ -160,8 +164,8 @@ public struct ButtonWithConfirmation<Label: View>: View {
     ButtonWithConfirmation(
         "Delete Event",
         confirmation: "Are you sure you want to delete this event?",
-        confirmationButton: "Delete Event",
-        cancelButton: "Keep Event",
+        confirmationButton: "Delete It",
+        cancelButton: "Keep It",
         requiresConfirmation: true,
         role: .cancel,
         action: {}
@@ -171,7 +175,6 @@ public struct ButtonWithConfirmation<Label: View>: View {
         "Delete Event",
         systemImage: "trash",
         confirmation: "Are you sure you want to delete this event?",
-        confirmationButton: "Delete Event",
         requiresConfirmation: false,
         action: {}
     )
