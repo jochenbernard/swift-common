@@ -121,12 +121,14 @@ public struct ButtonWithConfirmation<Label: View>: View {
                         label()
                     }
                 }
+                .keyboardShortcut(.defaultAction)
 
                 Button(
                     cancelButtonTitleKey,
                     role: .cancel,
                     action: {}
                 )
+                .keyboardShortcut(.cancelAction)
             }
         )
     }
