@@ -14,12 +14,12 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "SwiftCommon",
-            targets: ["SwiftCommon"]
-        ),
-        .library(
             name: "FoundationCommon",
             targets: ["FoundationCommon"]
+        ),
+        .library(
+            name: "SwiftCommon",
+            targets: ["SwiftCommon"]
         ),
         .library(
             name: "SwiftUICommon",
@@ -27,18 +27,16 @@ let package = Package(
         )
     ],
     targets: [
-        .target(
-            name: "SwiftCommon",
-            dependencies: [
-                "FoundationCommon",
-                "SwiftUICommon"
-            ]
-        ),
         .target(name: "FoundationCommon"),
+        .target(name: "SwiftCommon"),
         .target(name: "SwiftUICommon"),
         .testTarget(
             name: "FoundationCommonTests",
             dependencies: ["FoundationCommon"]
+        ),
+        .testTarget(
+            name: "SwiftCommonTests",
+            dependencies: ["SwiftCommon"]
         )
     ]
 )
