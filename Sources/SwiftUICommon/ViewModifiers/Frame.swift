@@ -45,3 +45,35 @@ public extension View {
         )
     }
 }
+
+#Preview {
+    Text("Frame")
+        .frame(size: 64.0)
+        .border(.red)
+
+    Text("Frame")
+        .frame(
+            maxSize: .infinity,
+            alignment: .topLeading
+        )
+        .border(.green)
+
+    Text("Frame")
+        .frame(
+            size: CGSize(
+                width: 64.0,
+                height: 32.0
+            )
+        )
+        .border(.blue)
+
+    Text("Frame")
+        .frame(
+            maxSize: CGSize(
+                width: .infinity,
+                height: 32.0
+            ),
+            alignment: .bottomTrailing
+        )
+        .border(.yellow)
+}
