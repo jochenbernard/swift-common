@@ -6,6 +6,8 @@ struct ConfirmationActions<Label: View>: View {
     private let confirmationButtonLabel: () -> Label
     private let cancelButtonTitleKey: LocalizedStringKey
 
+    @FocusState private var isConfirmationButtonFocused
+
     init(
         confirmationButtonRole: ButtonRole?,
         confirmationButtonAction: @escaping () -> Void,
@@ -27,6 +29,10 @@ struct ConfirmationActions<Label: View>: View {
         #if os(iOS) || os(macOS)
         .keyboardShortcut(.defaultAction)
         #endif
+        .focused($isConfirmationButtonFocused)
+        .onAppear {
+            isConfirmationButtonFocused = true
+        }
 
         Button(
             cancelButtonTitleKey,
