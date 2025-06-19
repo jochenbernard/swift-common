@@ -24,14 +24,18 @@ struct ConfirmationActions<Label: View>: View {
             action: confirmationButtonAction,
             label: confirmationButtonLabel
         )
+        #if os(iOS) || os(macOS)
         .keyboardShortcut(.defaultAction)
+        #endif
 
         Button(
             cancelButtonTitleKey,
             role: .cancel,
             action: {}
         )
+        #if os(iOS) || os(macOS)
         .keyboardShortcut(.cancelAction)
+        #endif
     }
 }
 

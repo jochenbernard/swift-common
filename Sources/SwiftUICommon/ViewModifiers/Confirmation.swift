@@ -21,6 +21,8 @@ public extension View {
     }
 }
 
+@available(iOS 14.0, macOS 11.0, tvOS 17.0, *)
+@available(watchOS, unavailable)
 private struct ConfirmationPreview: View {
     @State private var confirmation: ConfirmationModel?
 
@@ -40,6 +42,8 @@ private struct ConfirmationPreview: View {
     }
 }
 
+@available(iOS 14.0, macOS 11.0, tvOS 17.0, *)
+@available(watchOS, unavailable)
 #Preview {
     ConfirmationPreview()
 }
