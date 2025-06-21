@@ -14,6 +14,7 @@ public extension View {
             self
         } else {
             self
+                .disabled(true)
                 .redacted(reason: reason)
                 .phaseAnimator(
                     [0.0, 1.0],
