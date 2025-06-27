@@ -1,37 +1,31 @@
 import SwiftUI
 
-struct ConfirmationActions<Label: View>: View {
-    private let confirmationButtonRole: ButtonRole?
-    private let confirmationButtonAction: () -> Void
-    private let confirmationButtonLabel: () -> Label
-    private let cancelButtonTitleKey: LocalizedStringKey
-
-    init(
-        confirmationButtonRole: ButtonRole?,
-        confirmationButtonAction: @escaping () -> Void,
-        confirmationButtonLabel: @escaping () -> Label,
-        cancelButton cancelButtonTitleKey: LocalizedStringKey
-    ) {
-        self.confirmationButtonRole = confirmationButtonRole
-        self.confirmationButtonAction = confirmationButtonAction
-        self.confirmationButtonLabel = confirmationButtonLabel
-        self.cancelButtonTitleKey = cancelButtonTitleKey
-    }
+struct ConfirmationActions: View {
+    let confirmationButtonRole: ButtonRole?
+    let confirmationButtonAction: () -> Void
+    let confirmationButtonLabel: AnyView
+    let cancelButtonLabel: AnyView?
 
     var body: some View {
         Button(
             role: confirmationButtonRole,
             action: confirmationButtonAction,
-            label: confirmationButtonLabel
+            label: { confirmationButtonLabel }
         )
         #if os(iOS) || os(macOS)
         .keyboardShortcut(.defaultAction)
         #endif
 
         Button(
-            cancelButtonTitleKey,
             role: .cancel,
-            action: {}
+            action: {},
+            label: {
+                if let cancelButtonLabel {
+                    cancelButtonLabel
+                } else {
+                    Text("Cancel")
+                }
+            }
         )
         #if os(iOS) || os(macOS)
         .keyboardShortcut(.cancelAction)
@@ -43,7 +37,7 @@ struct ConfirmationActions<Label: View>: View {
     ConfirmationActions(
         confirmationButtonRole: .destructive,
         confirmationButtonAction: {},
-        confirmationButtonLabel: { Text("Delete Event") },
-        cancelButton: "Cancel"
+        confirmationButtonLabel: AnyView(Text("Delete Event")),
+        cancelButtonLabel: nil
     )
 }

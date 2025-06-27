@@ -1,130 +1,53 @@
 import SwiftUI
 
 public struct ButtonWithConfirmation<Label: View>: View {
-    private let confirmationTitleKey: LocalizedStringKey
-    private let confirmationButtonTitleKey: LocalizedStringKey?
-    private let cancelButtonTitleKey: LocalizedStringKey
-    private let requiresConfirmation: Bool
     private let role: ButtonRole?
-    private let model: Binding<ConfirmationModel?>?
     private let action: () -> Void
-    private let label: () -> Label
+    private let label: Label
+    private let requiresConfirmation: Bool
+    private let confirmationTitle: Text
+    private let confirmationButtonLabel: AnyView?
+    private let cancelButtonLabel: AnyView?
+    private let model: Binding<ConfirmationModel?>?
 
     @State private var isConfirmationDialogPresented = false
 
     public init(
-        confirmation confirmationTitleKey: LocalizedStringKey,
-        confirmationButton confirmationButtonTitleKey: LocalizedStringKey? = nil,
-        cancelButton cancelButtonTitleKey: LocalizedStringKey = "Cancel",
-        requiresConfirmation: Bool = true,
         role: ButtonRole? = nil,
-        model: Binding<ConfirmationModel?>? = nil,
         action: @escaping () -> Void,
-        @ViewBuilder label: @escaping () -> Label
+        label: Label,
+        requiresConfirmation: Bool = true,
+        confirmationTitle: Text,
+        confirmationButtonLabel: (any View)? = nil,
+        cancelButtonLabel: (any View)? = nil,
+        model: Binding<ConfirmationModel?>? = nil,
     ) {
-        self.confirmationTitleKey = confirmationTitleKey
-        self.confirmationButtonTitleKey = confirmationButtonTitleKey
-        self.cancelButtonTitleKey = cancelButtonTitleKey
-        self.requiresConfirmation = requiresConfirmation
         self.role = role
-        self.model = model
         self.action = action
         self.label = label
-    }
-
-    public init(
-        _ titleKey: LocalizedStringKey,
-        confirmation confirmationTitleKey: LocalizedStringKey,
-        confirmationButton confirmationButtonTitleKey: LocalizedStringKey? = nil,
-        cancelButton cancelButtonTitleKey: LocalizedStringKey = "Cancel",
-        requiresConfirmation: Bool = true,
-        role: ButtonRole? = nil,
-        model: Binding<ConfirmationModel?>? = nil,
-        action: @escaping () -> Void,
-    ) where Label == Text {
-        self.init(
-            confirmation: confirmationTitleKey,
-            confirmationButton: confirmationButtonTitleKey,
-            cancelButton: cancelButtonTitleKey,
-            requiresConfirmation: requiresConfirmation,
-            role: role,
-            model: model,
-            action: action
-        ) {
-            Text(titleKey)
-        }
-    }
-
-    public init(
-        _ titleKey: LocalizedStringKey,
-        image: String,
-        confirmation confirmationTitleKey: LocalizedStringKey,
-        confirmationButton confirmationButtonTitleKey: LocalizedStringKey? = nil,
-        cancelButton cancelButtonTitleKey: LocalizedStringKey = "Cancel",
-        requiresConfirmation: Bool = true,
-        role: ButtonRole? = nil,
-        model: Binding<ConfirmationModel?>? = nil,
-        action: @escaping () -> Void,
-    ) where Label == SwiftUI.Label<Text, Image> {
-        self.init(
-            confirmation: confirmationTitleKey,
-            confirmationButton: confirmationButtonTitleKey,
-            cancelButton: cancelButtonTitleKey,
-            requiresConfirmation: requiresConfirmation,
-            role: role,
-            model: model,
-            action: action
-        ) {
-            Label(
-                titleKey,
-                image: image
-            )
-        }
-    }
-
-    public init(
-        _ titleKey: LocalizedStringKey,
-        systemImage: String,
-        confirmation confirmationTitleKey: LocalizedStringKey,
-        confirmationButton confirmationButtonTitleKey: LocalizedStringKey? = nil,
-        cancelButton cancelButtonTitleKey: LocalizedStringKey = "Cancel",
-        requiresConfirmation: Bool = true,
-        role: ButtonRole? = nil,
-        model: Binding<ConfirmationModel?>? = nil,
-        action: @escaping () -> Void,
-    ) where Label == SwiftUI.Label<Text, Image> {
-        self.init(
-            confirmation: confirmationTitleKey,
-            confirmationButton: confirmationButtonTitleKey,
-            cancelButton: cancelButtonTitleKey,
-            requiresConfirmation: requiresConfirmation,
-            role: role,
-            model: model,
-            action: action
-        ) {
-            Label(
-                titleKey,
-                systemImage: systemImage
-            )
-        }
+        self.requiresConfirmation = requiresConfirmation
+        self.confirmationTitle = confirmationTitle
+        self.confirmationButtonLabel = confirmationButtonLabel.map({ AnyView($0) })
+        self.cancelButtonLabel = cancelButtonLabel.map({ AnyView($0) })
+        self.model = model
     }
 
     public var body: some View {
         Button(
             role: role,
             action: buttonAction,
-            label: label
+            label: { label }
         )
         .confirmationDialog(
-            confirmationTitleKey,
+            confirmationTitle,
             isPresented: $isConfirmationDialogPresented,
             titleVisibility: .visible,
             actions: {
                 ConfirmationActions(
                     confirmationButtonRole: confirmationButtonRole,
                     confirmationButtonAction: confirmationButtonAction,
-                    confirmationButtonLabel: confirmationButtonLabel,
-                    cancelButton: cancelButtonTitleKey
+                    confirmationButtonLabel: unwrappedConfirmationButtonLabel,
+                    cancelButtonLabel: cancelButtonLabel
                 )
             }
         )
@@ -138,12 +61,11 @@ public struct ButtonWithConfirmation<Label: View>: View {
         }
     }
 
-    @ViewBuilder
-    private func confirmationButtonLabel() -> some View {
-        if let confirmationButtonTitleKey {
-            Text(confirmationButtonTitleKey)
+    private var unwrappedConfirmationButtonLabel: AnyView {
+        if let confirmationButtonLabel {
+            confirmationButtonLabel
         } else {
-            label()
+            AnyView(label)
         }
     }
 
@@ -151,11 +73,11 @@ public struct ButtonWithConfirmation<Label: View>: View {
         if requiresConfirmation {
             if let model {
                 model.wrappedValue = ConfirmationModel(
-                    confirmationTitleKey: confirmationTitleKey,
+                    confirmationTitle: confirmationTitle,
                     confirmationButtonRole: confirmationButtonRole,
                     confirmationButtonAction: action,
-                    confirmationButtonLabel: confirmationButtonLabel,
-                    cancelButtonTitleKey: cancelButtonTitleKey,
+                    confirmationButtonLabel: unwrappedConfirmationButtonLabel,
+                    cancelButtonLabel: cancelButtonLabel,
                 )
             } else {
                 isConfirmationDialogPresented = true
@@ -172,28 +94,9 @@ public struct ButtonWithConfirmation<Label: View>: View {
 
 #Preview {
     ButtonWithConfirmation(
-        confirmation: "Are you sure you want to delete this event?",
-        role: .destructive,
-        action: {}
-    ) {
-        Text("Delete Event")
-    }
-
-    ButtonWithConfirmation(
-        "Delete Event",
-        confirmation: "Are you sure you want to delete this event?",
-        confirmationButton: "Delete It",
-        cancelButton: "Keep It",
-        requiresConfirmation: true,
         role: .cancel,
-        action: {}
-    )
-
-    ButtonWithConfirmation(
-        "Delete Event",
-        systemImage: "trash",
-        confirmation: "Are you sure you want to delete this event?",
-        requiresConfirmation: false,
-        action: {}
+        action: {},
+        label: Text("Delete Event"),
+        confirmationTitle: Text("Are you sure you want to delete this event?")
     )
 }

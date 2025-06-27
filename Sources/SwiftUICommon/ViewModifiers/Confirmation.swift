@@ -3,7 +3,7 @@ import SwiftUI
 public extension View {
     func confirmation(model: Binding<ConfirmationModel?>) -> some View {
         confirmationDialog(
-            model.wrappedValue?.confirmationTitleKey ?? "",
+            model.wrappedValue?.confirmationTitle ?? Text(""),
             isPresented: Binding(
                 get: { model.wrappedValue != nil },
                 set: { if !$0 { model.wrappedValue = nil } }
@@ -13,15 +13,20 @@ public extension View {
                 ConfirmationActions(
                     confirmationButtonRole: model.wrappedValue?.confirmationButtonRole,
                     confirmationButtonAction: model.wrappedValue?.confirmationButtonAction ?? {},
-                    confirmationButtonLabel: model.wrappedValue?.confirmationButtonLabel ?? { AnyView(EmptyView()) },
-                    cancelButton: model.wrappedValue?.cancelButtonTitleKey ?? ""
+                    confirmationButtonLabel: model.wrappedValue?.confirmationButtonLabel ?? AnyView(EmptyView()),
+                    cancelButtonLabel: model.wrappedValue?.cancelButtonLabel
                 )
             }
         )
     }
 }
 
-@available(iOS 14.0, macOS 11.0, tvOS 17.0, *)
+@available(
+    iOS 14.0,
+    macOS 11.0,
+    tvOS 17.0,
+    *
+)
 @available(watchOS, unavailable)
 private struct ConfirmationPreview: View {
     @State private var confirmation: ConfirmationModel?
@@ -32,17 +37,22 @@ private struct ConfirmationPreview: View {
             systemImage: "ellipsis"
         ) {
             ButtonWithConfirmation(
-                "Delete Event",
-                confirmation: "Are you sure you want to delete this event?",
-                model: $confirmation,
-                action: {}
+                action: {},
+                label: Text("Delete Event"),
+                confirmationTitle: Text("Are you sure you want to delete this event?"),
+                model: $confirmation
             )
         }
         .confirmation(model: $confirmation)
     }
 }
 
-@available(iOS 14.0, macOS 11.0, tvOS 17.0, *)
+@available(
+    iOS 14.0,
+    macOS 11.0,
+    tvOS 17.0,
+    *
+)
 @available(watchOS, unavailable)
 #Preview {
     ConfirmationPreview()
