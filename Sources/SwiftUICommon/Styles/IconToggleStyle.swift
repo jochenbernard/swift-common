@@ -2,12 +2,15 @@ import SwiftUI
 
 public struct IconToggleStyle: ToggleStyle {
     public func makeBody(configuration: Configuration) -> some View {
-        Button(action: { configuration.isOn.toggle() }) {
-            configuration
-                .label
-                .labelStyle(.iconOnly)
-                .symbolVariant(configuration.isOn ? .fill : .none)
-        }
+        Button(
+            action: { configuration.isOn.toggle() },
+            label: {
+                configuration
+                    .label
+                    .labelStyle(.iconOnly)
+                    .symbolVariant(configuration.isOn ? .fill : .none)
+            }
+        )
     }
 }
 
