@@ -9,16 +9,19 @@ on:
 jobs:
   test:
     name: Run tests
-    runs-on: macos-15
+    runs-on: macos-latest
 
     steps:
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
     - uses: actions/checkout@v4
     - name: Run tests
       run: swift test -v
 
   build:
     name: Build ${{ matrix.platform }}
-    runs-on: macos-15
+    runs-on: macos-latest
     needs: test
     strategy:
       fail-fast: false
@@ -38,6 +41,9 @@ jobs:
             destination: 'generic/platform=watchOS'
 
     steps:
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
     - uses: actions/checkout@v4
     - name: Build ${{ matrix.platform }}
       run: |
