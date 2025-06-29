@@ -1,4 +1,4 @@
-name: Swift
+name: Tests
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
       run: swift test -v
 
   build:
-    name: Build ${{ matrix.platform }}
+    name: Build for ${{ matrix.platform }}
     runs-on: macos-15
     needs: test
     strategy:
@@ -45,7 +45,7 @@ jobs:
       with:
         xcode-version: latest-stable
     - uses: actions/checkout@v4
-    - name: Build ${{ matrix.platform }}
+    - name: Build for ${{ matrix.platform }}
       run: |
         xcodebuild build \
           -scheme SwiftCommon-Package \
