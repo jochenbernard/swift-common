@@ -24,6 +24,7 @@ jobs:
     runs-on: macos-15
     needs: test
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         include:
