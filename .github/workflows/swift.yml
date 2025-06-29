@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     name: Run tests
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
     - uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
 
   build:
     name: Build ${{ matrix.platform }}
-    runs-on: macos-latest
+    runs-on: macos-15
     needs: test
     strategy:
       fail-fast: false
