@@ -1,0 +1,47 @@
+name: Swift
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run tests
+      run: swift test -v
+
+  build:
+    name: Build ${{ matrix.platform }}
+    runs-on: macos-latest
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: iOS
+            destination: 'generic/platform=iOS'
+          - platform: macCatalyst
+            destination: 'platform=macOS,variant=Mac Catalyst'
+          - platform: macOS
+            destination: 'platform=macOS'
+          - platform: tvOS
+            destination: 'generic/platform=tvOS'
+          - platform: visionOS
+            destination: 'generic/platform=visionOS'
+          - platform: watchOS
+            destination: 'generic/platform=watchOS'
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build ${{ matrix.platform }}
+      run: |
+        xcodebuild build \
+          -scheme SwiftCommon-Package \
+          -destination '${{ matrix.destination }}' \
+          -verbose
