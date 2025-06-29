@@ -16,6 +16,8 @@ jobs:
       with:
         xcode-version: latest-stable
     - uses: actions/checkout@v4
+    - name: Lint
+      run: swift package plugin --allow-writing-to-package-directory swiftlint --strict Sources/ Tests/
     - name: Run tests
       run: swift test -v
 
@@ -47,8 +49,4 @@ jobs:
         xcode-version: latest-stable
     - uses: actions/checkout@v4
     - name: Build for ${{ matrix.platform }}
-      run: |
-        xcodebuild build-for-testing \
-          -scheme SwiftCommon-Package \
-          -destination '${{ matrix.destination }}' \
-          -verbose
+      run: xcodebuild build-for-testing -scheme SwiftCommon-Package -destination '${{ matrix.destination }}' -verbose
