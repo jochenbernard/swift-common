@@ -1,11 +1,11 @@
 public extension Collection where Element: Identifiable {
-    func firstIndex(of id: Element.ID) -> Index? {
+    func firstIndex(for id: Element.ID) -> Index? {
         firstIndex {
             $0.id == id
         }
     }
 
-    func firstIndex(of element: Element) -> Index? {
-        firstIndex(of: element.id)
+    func firstIndex(for element: Element) -> Index? {
+        firstIndex(for: element.id)
     }
 }
