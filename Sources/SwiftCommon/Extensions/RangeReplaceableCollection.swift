@@ -1,8 +1,6 @@
 public extension RangeReplaceableCollection where Element: Identifiable {
     mutating func removeAll(id: Element.ID) {
-        removeAll {
-            $0.id == id
-        }
+        removeAll(where: { $0.id == id })
     }
 
     mutating func removeAll(_ element: Element) {
@@ -10,9 +8,7 @@ public extension RangeReplaceableCollection where Element: Identifiable {
     }
 
     mutating func removeAll(ids: Set<Element.ID>) {
-        removeAll {
-            ids.contains($0.id)
-        }
+        removeAll(where: { ids.contains($0.id) })
     }
 
     mutating func removeAll(_ elements: [Element]) {
@@ -20,9 +16,7 @@ public extension RangeReplaceableCollection where Element: Identifiable {
     }
 
     func removingAll(id: Element.ID) -> Self {
-        filter {
-            $0.id != id
-        }
+        filter({ $0.id != id })
     }
 
     func removingAll(_ element: Element) -> Self {
@@ -30,9 +24,7 @@ public extension RangeReplaceableCollection where Element: Identifiable {
     }
 
     func removingAll(ids: Set<Element.ID>) -> Self {
-        filter {
-            !ids.contains($0.id)
-        }
+        filter({ !ids.contains($0.id) })
     }
 
     func removingAll(_ elements: [Element]) -> Self {
