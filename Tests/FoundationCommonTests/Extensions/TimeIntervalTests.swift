@@ -54,6 +54,7 @@ struct TimeIntervalTests {
     }
 
     @Test(arguments: [
+        (0.5, 0.5),
         (1.0, 1.0),
         (2.0, 2.0),
         (4.0, 4.0)
@@ -66,6 +67,7 @@ struct TimeIntervalTests {
     }
 
     @Test(arguments: [
+        (0.5, 30.0),
         (1.0, 60.0),
         (2.0, 120.0),
         (4.0, 240.0)
@@ -78,6 +80,7 @@ struct TimeIntervalTests {
     }
 
     @Test(arguments: [
+        (0.5, 1_800.0),
         (1.0, 3_600.0),
         (2.0, 7_200.0),
         (4.0, 14_400.0)
@@ -90,6 +93,7 @@ struct TimeIntervalTests {
     }
 
     @Test(arguments: [
+        (0.5, 43_200.0),
         (1.0, 86_400.0),
         (2.0, 172_800.0),
         (4.0, 345_600.0)
@@ -102,6 +106,7 @@ struct TimeIntervalTests {
     }
 
     @Test(arguments: [
+        (0.5, 302_400.0),
         (1.0, 604_800.0),
         (2.0, 1_209_600.0),
         (4.0, 2_419_200.0)
