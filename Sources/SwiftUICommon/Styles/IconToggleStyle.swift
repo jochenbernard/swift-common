@@ -15,6 +15,7 @@ public struct IconToggleStyle: ToggleStyle {
 }
 
 public extension ToggleStyle where Self == IconToggleStyle {
+    /// A toggle style that displays its icon.
     static var icon: IconToggleStyle {
         IconToggleStyle()
     }
