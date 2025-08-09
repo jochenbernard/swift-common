@@ -8,6 +8,10 @@ import SwiftUI
     *
 )
 public extension View {
+    /// Adds a reason to apply an animated redaction to this view hierarchy.
+    ///
+    /// Adding a redaction is an additive process: any redaction provided will be added to the reasons provided by the
+    /// parent.
     @ViewBuilder
     func redactedWithAnimation(reason: RedactionReasons) -> some View {
         if reason.isEmpty {
