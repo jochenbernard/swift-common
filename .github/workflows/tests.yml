@@ -2,9 +2,12 @@ name: Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+
+env:
+  XCODE_VERSION: ^26.0-beta
 
 jobs:
   test:
@@ -12,14 +15,14 @@ jobs:
     runs-on: macos-15
 
     steps:
-    - uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: latest-stable
-    - uses: actions/checkout@v4
-    - name: Lint
-      run: swift package plugin --allow-writing-to-package-directory swiftlint --strict Sources/ Tests/
-    - name: Run tests
-      run: swift test -v
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: $XCODE_VERSION
+      - uses: actions/checkout@v4
+      - name: Lint
+        run: swift package plugin --allow-writing-to-package-directory swiftlint --strict Sources/ Tests/
+      - name: Run tests
+        run: swift test -v
 
   build:
     name: Build for ${{ matrix.platform }}
@@ -31,22 +34,22 @@ jobs:
       matrix:
         include:
           - platform: iOS
-            destination: 'generic/platform=iOS'
+            destination: "generic/platform=iOS"
           - platform: macCatalyst
-            destination: 'platform=macOS,variant=Mac Catalyst'
+            destination: "platform=macOS,variant=Mac Catalyst"
           - platform: macOS
-            destination: 'platform=macOS'
+            destination: "platform=macOS"
           - platform: tvOS
-            destination: 'generic/platform=tvOS'
+            destination: "generic/platform=tvOS"
           - platform: visionOS
-            destination: 'generic/platform=visionOS'
+            destination: "generic/platform=visionOS"
           - platform: watchOS
-            destination: 'generic/platform=watchOS'
+            destination: "generic/platform=watchOS"
 
     steps:
-    - uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: latest-stable
-    - uses: actions/checkout@v4
-    - name: Build for ${{ matrix.platform }}
-      run: xcodebuild build-for-testing -scheme SwiftCommon-Package -destination '${{ matrix.destination }}' -verbose
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: $XCODE_VERSION
+      - uses: actions/checkout@v4
+      - name: Build for ${{ matrix.platform }}
+        run: xcodebuild build-for-testing -scheme SwiftCommon-Package -destination '${{ matrix.destination }}' -verbose
