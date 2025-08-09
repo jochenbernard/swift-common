@@ -1,17 +1,22 @@
 import SwiftUI
 
+/// A toggle style that displays its icon.
 public struct IconToggleStyle: ToggleStyle {
     public func makeBody(configuration: Configuration) -> some View {
-        Button(action: { configuration.isOn.toggle() }) {
-            configuration
-                .label
-                .labelStyle(.iconOnly)
-                .symbolVariant(configuration.isOn ? .fill : .none)
-        }
+        Button(
+            action: { configuration.isOn.toggle() },
+            label: {
+                configuration
+                    .label
+                    .labelStyle(.iconOnly)
+                    .symbolVariant(configuration.isOn ? .fill : .none)
+            }
+        )
     }
 }
 
 public extension ToggleStyle where Self == IconToggleStyle {
+    /// A toggle style that displays its icon.
     static var icon: IconToggleStyle {
         IconToggleStyle()
     }

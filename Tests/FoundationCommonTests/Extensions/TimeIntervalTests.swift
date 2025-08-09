@@ -6,22 +6,22 @@ import FoundationCommon
 @Suite
 struct DoubleTests {
     @Test
-    static func testSecondsPerMinute() {
+    func testSecondsPerMinute() {
         #expect(Double.secondsPerMinute == 60.0)
     }
 
     @Test
-    static func testMinutesPerHour() {
+    func testMinutesPerHour() {
         #expect(Double.minutesPerHour == 60.0)
     }
 
     @Test
-    static func testHoursPerDay() {
+    func testHoursPerDay() {
         #expect(Double.hoursPerDay == 24.0)
     }
 
     @Test
-    static func testDaysPerWeek() {
+    func testDaysPerWeek() {
         #expect(Double.daysPerWeek == 7.0)
     }
 }
@@ -29,36 +29,37 @@ struct DoubleTests {
 @Suite
 struct TimeIntervalTests {
     @Test
-    static func testOneSecond() {
+    func testOneSecond() {
         #expect(TimeInterval.oneSecond == 1.0)
     }
 
     @Test
-    static func testOneMinute() {
+    func testOneMinute() {
         #expect(TimeInterval.oneMinute == 60.0)
     }
 
     @Test
-    static func testOneHour() {
-        #expect(TimeInterval.oneHour == 3600.0)
+    func testOneHour() {
+        #expect(TimeInterval.oneHour == 3_600.0)
     }
 
     @Test
-    static func testOneDay() {
-        #expect(TimeInterval.oneDay == 86400.0)
+    func testOneDay() {
+        #expect(TimeInterval.oneDay == 86_400.0)
     }
 
     @Test
-    static func testOneWeek() {
-        #expect(TimeInterval.oneWeek == 604800.0)
+    func testOneWeek() {
+        #expect(TimeInterval.oneWeek == 604_800.0)
     }
 
     @Test(arguments: [
+        (0.5, 0.5),
         (1.0, 1.0),
         (2.0, 2.0),
         (4.0, 4.0)
     ])
-    static func testSeconds(
+    func testSeconds(
         seconds: Double,
         expectedTimeInterval: TimeInterval
     ) {
@@ -66,11 +67,12 @@ struct TimeIntervalTests {
     }
 
     @Test(arguments: [
+        (0.5, 30.0),
         (1.0, 60.0),
         (2.0, 120.0),
         (4.0, 240.0)
     ])
-    static func testMinutes(
+    func testMinutes(
         minutes: Double,
         expectedTimeInterval: TimeInterval
     ) {
@@ -78,11 +80,12 @@ struct TimeIntervalTests {
     }
 
     @Test(arguments: [
-        (1.0, 3600.0),
-        (2.0, 7200.0),
-        (4.0, 14400.0)
+        (0.5, 1_800.0),
+        (1.0, 3_600.0),
+        (2.0, 7_200.0),
+        (4.0, 14_400.0)
     ])
-    static func testHours(
+    func testHours(
         hours: Double,
         expectedTimeInterval: TimeInterval
     ) {
@@ -90,11 +93,12 @@ struct TimeIntervalTests {
     }
 
     @Test(arguments: [
-        (1.0, 86400.0),
-        (2.0, 172800.0),
-        (4.0, 345600.0)
+        (0.5, 43_200.0),
+        (1.0, 86_400.0),
+        (2.0, 172_800.0),
+        (4.0, 345_600.0)
     ])
-    static func testDays(
+    func testDays(
         days: Double,
         expectedTimeInterval: TimeInterval
     ) {
@@ -102,11 +106,12 @@ struct TimeIntervalTests {
     }
 
     @Test(arguments: [
-        (1.0, 604800.0),
-        (2.0, 1209600.0),
-        (4.0, 2419200.0)
+        (0.5, 302_400.0),
+        (1.0, 604_800.0),
+        (2.0, 1_209_600.0),
+        (4.0, 2_419_200.0)
     ])
-    static func testWeeks(
+    func testWeeks(
         weeks: Double,
         expectedTimeInterval: TimeInterval
     ) {

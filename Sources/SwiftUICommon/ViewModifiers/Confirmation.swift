@@ -1,6 +1,11 @@
 import SwiftUI
 
 public extension View {
+    /// Presents a confirmation dialog when a specified binding contains a ``ConfirmationModel``.
+    ///
+    /// A ``ConfirmationModel`` can be assigned using ``ButtonWithConfirmation``.
+    ///
+    /// - Parameter model: The binding to an optional ``ConfirmationModel``.
     func confirmation(model: Binding<ConfirmationModel?>) -> some View {
         confirmationDialog(
             model.wrappedValue?.confirmationTitle ?? Text(""),

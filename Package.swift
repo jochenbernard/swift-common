@@ -26,17 +26,59 @@ let package = Package(
             targets: ["SwiftUICommon"]
         )
     ],
+    dependencies: [
+        .package(
+            url: "https://github.com/SimplyDanny/SwiftLintPlugins",
+            from: "0.0.0"
+        )
+    ],
     targets: [
-        .target(name: "FoundationCommon"),
-        .target(name: "SwiftCommon"),
-        .target(name: "SwiftUICommon"),
+        .target(
+            name: "FoundationCommon",
+            plugins: [
+                .plugin(
+                    name: "SwiftLintBuildToolPlugin",
+                    package: "SwiftLintPlugins"
+                )
+            ]
+        ),
+        .target(
+            name: "SwiftCommon",
+            plugins: [
+                .plugin(
+                    name: "SwiftLintBuildToolPlugin",
+                    package: "SwiftLintPlugins"
+                )
+            ]
+        ),
+        .target(
+            name: "SwiftUICommon",
+            plugins: [
+                .plugin(
+                    name: "SwiftLintBuildToolPlugin",
+                    package: "SwiftLintPlugins"
+                )
+            ]
+        ),
         .testTarget(
             name: "FoundationCommonTests",
-            dependencies: ["FoundationCommon"]
+            dependencies: ["FoundationCommon"],
+            plugins: [
+                .plugin(
+                    name: "SwiftLintBuildToolPlugin",
+                    package: "SwiftLintPlugins"
+                )
+            ]
         ),
         .testTarget(
             name: "SwiftCommonTests",
-            dependencies: ["SwiftCommon"]
+            dependencies: ["SwiftCommon"],
+            plugins: [
+                .plugin(
+                    name: "SwiftLintBuildToolPlugin",
+                    package: "SwiftLintPlugins"
+                )
+            ]
         )
     ]
 )
