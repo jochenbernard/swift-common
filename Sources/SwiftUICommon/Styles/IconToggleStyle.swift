@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// A toggle style that displays its icon.
 public struct IconToggleStyle: ToggleStyle {
     public func makeBody(configuration: Configuration) -> some View {
         Button(
