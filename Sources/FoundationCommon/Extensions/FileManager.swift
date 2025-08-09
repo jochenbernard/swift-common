@@ -24,11 +24,12 @@ public extension FileManager {
 
     /// Returns a boolean value that indicates whether a file or directory exists at the specified URL.
     ///
-    /// - Parameter url: The URL of the file or directory.
-    /// - Parameter isDirectory: Upon return, contains `true` if `url` is a directory or if the final path element is a
-    ///                          symbolic link that points to a directory; otherwise, contains `false`. If `url` doesn't
-    ///                          exist, this value is undefined upon return. Pass `nil` if you do not need this
-    ///                          information.
+    /// - Parameters:
+    ///   - url: The URL of the file or directory.
+    ///   - isDirectory: Upon return, contains `true` if `url` is a directory or if the final path element is a symbolic
+    ///                  link that points to a directory; otherwise, contains `false`. If `url` doesn't exist, this
+    ///                  value is undefined upon return. Pass `nil` if you do not need this information.
+    ///
     /// - Returns: `true` if a file at the given URL exists, or `false` if the file does not exist or its existence
     ///            could not be determined.
     ///
