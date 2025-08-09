@@ -21,6 +21,7 @@ private struct FocusOnAppear: ViewModifier {
 }
 
 public extension View {
+    /// Cause the view to receive focus whenever it appears.
     func focusOnAppear(_ focusOnAppear: Bool = true) -> some View {
         modifier(FocusOnAppear(focusOnAppear))
     }
