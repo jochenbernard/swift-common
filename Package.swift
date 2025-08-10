@@ -1,4 +1,4 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -30,6 +30,10 @@ let package = Package(
         .package(
             url: "https://github.com/SimplyDanny/SwiftLintPlugins",
             from: "0.0.0"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-docc-plugin",
+            from: "1.0.0"
         )
     ],
     targets: [

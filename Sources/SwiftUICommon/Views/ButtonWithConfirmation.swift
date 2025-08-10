@@ -32,8 +32,8 @@ public struct ButtonWithConfirmation<Label: View>: View {
     ///   - model: An optional binding to a ``ConfirmationModel``. If `model` is `nil` this view will directly present
     ///            a confirmation dialog when the user interacts with the button. If `model` is a binding this view will
     ///            assign a ``ConfirmationModel`` to this binding when the user interacts with the button to be handled
-    ///            elsewhere using the ``confirmation(model:)`` `ViewModifier` or the ``ConfirmationScene`` `Scene`. The
-    ///            default is `nil`.
+    ///            elsewhere using the ``SwiftUICore/View/confirmation(model:)`` `ViewModifier` or the
+    ///            ``ConfirmationScene`` `Scene`. The default is `nil`.
     public init(
         role: ButtonRole? = nil,
         action: @escaping () -> Void,

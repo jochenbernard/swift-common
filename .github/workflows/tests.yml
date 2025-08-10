@@ -25,10 +25,11 @@ jobs:
             .build
             ~/.swiftpm
           key: ${{ runner.os }}-packages-${{ hashFiles('Package.resolved') }}
+          restore-keys: ${{ runner.os }}-packages-
       - name: Lint
         run: swift package plugin --allow-writing-to-package-directory swiftlint --strict Sources/ Tests/
       - name: Run tests
-        run: swift test -v
+        run: swift test
 #  build:
 #    name: Build for ${{ matrix.platform }}
 #    runs-on: macos-15
