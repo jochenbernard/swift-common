@@ -7,7 +7,7 @@ A collection of common Swift utilities I seem to be adding to projects over and 
 Add the following dependency to your `Package.swift` file:
 
 ```Swift
-.package(url: "https://github.com/jochenbernard/swift-common", from: "0.0.0")
+.package(url: "https://github.com/jochenbernard/swift-common", from: "0.1.0")
 ```
 
 ## Minimum Versions
