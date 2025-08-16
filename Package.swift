@@ -83,6 +83,16 @@ let package = Package(
                     package: "SwiftLintPlugins"
                 )
             ]
+        ),
+        .testTarget(
+            name: "SwiftUICommonTests",
+            dependencies: ["SwiftUICommon"],
+            plugins: [
+                .plugin(
+                    name: "SwiftLintBuildToolPlugin",
+                    package: "SwiftLintPlugins"
+                )
+            ]
         )
     ]
 )
