@@ -6,6 +6,7 @@ import SwiftUI
 /// A ``ConfirmationModel`` can be assigned using ``ButtonWithConfirmation``.
 public struct ConfirmationModel {
     let confirmationTitle: Text
+    let confirmationMessage: AnyView?
     let confirmationButtonRole: ButtonRole?
     let confirmationButtonAction: () -> Void
     let confirmationButtonLabel: AnyView

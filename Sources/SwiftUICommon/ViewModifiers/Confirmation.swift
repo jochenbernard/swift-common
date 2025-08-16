@@ -21,7 +21,8 @@ public extension View {
                     confirmationButtonLabel: model.wrappedValue?.confirmationButtonLabel ?? AnyView(EmptyView()),
                     cancelButtonLabel: model.wrappedValue?.cancelButtonLabel
                 )
-            }
+            },
+            message: { model.wrappedValue?.confirmationMessage }
         )
     }
 }

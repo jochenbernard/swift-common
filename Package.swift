@@ -10,7 +10,7 @@ let package = Package(
         .macOS(.v12),
         .tvOS(.v15),
         .visionOS(.v1),
-        .watchOS(.v8),
+        .watchOS(.v8)
     ],
     products: [
         .library(
@@ -29,7 +29,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/SimplyDanny/SwiftLintPlugins",
-            from: "0.0.0"
+            from: "0.1.0"
         ),
         .package(
             url: "https://github.com/apple/swift-docc-plugin",
