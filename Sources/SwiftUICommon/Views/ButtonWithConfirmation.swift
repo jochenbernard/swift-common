@@ -7,6 +7,7 @@ public struct ButtonWithConfirmation<Label: View>: View {
     private let label: Label
     private let requiresConfirmation: Bool
     private let confirmationTitle: Text
+    private let confirmationMessage: AnyView?
     private let confirmationButtonLabel: AnyView?
     private let cancelButtonLabel: AnyView?
     private let model: Binding<ConfirmationModel?>?
@@ -25,6 +26,7 @@ public struct ButtonWithConfirmation<Label: View>: View {
     ///                           `requiresConfirmation` is `false` `action` will be performed directly when the user
     ///                           interacts with the button. The default is `true`.
     ///   - confirmationTitle: The title of the confirmation dialog.
+    ///   - confirmationMessage: The optional message of the confirmation dialog. The default is `nil`.
     ///   - confirmationButtonLabel: The label of the confirmation button. If `confirmationButtonLabel` is `nil` `label`
     ///                              will be used instead. The default is `nil`.
     ///   - cancelButtonLabel: The label of the cancel button. If `cancelButtonLabel` is `nil` "Cancel" will be used
@@ -40,15 +42,17 @@ public struct ButtonWithConfirmation<Label: View>: View {
         label: Label,
         requiresConfirmation: Bool = true,
         confirmationTitle: Text,
+        confirmationMessage: (any View)? = nil,
         confirmationButtonLabel: (any View)? = nil,
         cancelButtonLabel: (any View)? = nil,
-        model: Binding<ConfirmationModel?>? = nil,
+        model: Binding<ConfirmationModel?>? = nil
     ) {
         self.role = role
         self.action = action
         self.label = label
         self.requiresConfirmation = requiresConfirmation
         self.confirmationTitle = confirmationTitle
+        self.confirmationMessage = confirmationMessage.map({ AnyView($0) })
         self.confirmationButtonLabel = confirmationButtonLabel.map({ AnyView($0) })
         self.cancelButtonLabel = cancelButtonLabel.map({ AnyView($0) })
         self.model = model
@@ -71,7 +75,8 @@ public struct ButtonWithConfirmation<Label: View>: View {
                     confirmationButtonLabel: unwrappedConfirmationButtonLabel,
                     cancelButtonLabel: cancelButtonLabel
                 )
-            }
+            },
+            message: { confirmationMessage }
         )
     }
 
@@ -96,10 +101,11 @@ public struct ButtonWithConfirmation<Label: View>: View {
             if let model {
                 model.wrappedValue = ConfirmationModel(
                     confirmationTitle: confirmationTitle,
+                    confirmationMessage: confirmationMessage,
                     confirmationButtonRole: confirmationButtonRole,
                     confirmationButtonAction: action,
                     confirmationButtonLabel: unwrappedConfirmationButtonLabel,
-                    cancelButtonLabel: cancelButtonLabel,
+                    cancelButtonLabel: cancelButtonLabel
                 )
             } else {
                 isConfirmationDialogPresented = true
