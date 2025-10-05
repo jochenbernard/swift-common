@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 env:
-  XCODE_VERSION: ^26.0-beta
+  XCODE_VERSION: ^26.0
 
 jobs:
   test:
